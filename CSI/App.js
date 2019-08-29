@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
-import {Text, View, TextInput, Button, StyleSheet} from 'react-native'
-
+import {Text, View, TextInput} from 'react-native'
+import Button from 'react-native-button'
+import Icon from 'react-native-vector-icons/Fontisto'
+import styles from './app/Styles/Style'
+import Feed from './app/components/Feed'
+import Profile from './app/components/Profile'
+import Settings from './app/components/Settings'
+import WelcomeScreen from './app/components/WelcomeScreen/WelcomeScreen'
+import DashboardScreen from './app/components/DashboardScreen/DashboardScreen'
+import LaunchScreen from './app/components/LaunchScreen/LaunchScreen'
 
 
 import {
@@ -20,64 +28,6 @@ class App extends Component {
 export default App
 
 
-class WelcomeScreen extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Button
-          title="Login"
-          style={{ padding: 10 }}
-          onPress={() => this.props.navigation.navigate('Dashboard')}
-        />
-        <Button title="Sign Up" onPress={() => alert('button pressed')} />
-      </View>
-    );
-  }
-}
-
-class DashboardScreen extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>DashboardScreen</Text>
-      </View>
-    );
-  }
-}
-
-
-class Feed extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Feed</Text>
-      </View>
-    );
-  }
-}
-
-
-class Profile extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Profile</Text>
-      </View>
-    );
-  }
-}
-
-class Settings extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Settings</Text>
-      </View>
-    );
-  }
-}
-
-
 const DashboardTabNavigator = createBottomTabNavigator(
   {
     Feed,
@@ -88,8 +38,16 @@ const DashboardTabNavigator = createBottomTabNavigator(
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index];
       return {
-        headerTitle: routeName
-      };
+        headerTitle: routeName,
+        headerTitleStyle: { 
+          
+          textAlign: 'center',
+          alignSelf:'center',
+          flex:1,
+
+
+      },
+      }
     }
   }
 );
@@ -98,6 +56,28 @@ const DashboardTabNavigator = createBottomTabNavigator(
 const DashboardStackNavigator = createStackNavigator(
   {
     DashboardTabNavigator: DashboardTabNavigator
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerLeft: (
+          <Icon
+            style={{ paddingLeft: 10 }}
+            onPress={() => navigation.openDrawer()}
+            name="nav-icon-a"
+            size={20}
+          />
+        ),
+        headerRight: (
+          <Icon
+          style={{ paddingRight: 15 }}
+          onPress={() => alert('Search button pressed')}
+          name="search"
+          size={20}
+        />
+        )
+      }
+    }   
   }
 );
 
@@ -109,18 +89,10 @@ const AppDrawerNavigator = createDrawerNavigator({
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
+  //Launch: {screen:LaunchScreen},
   Welcome: { screen: WelcomeScreen },
   Dashboard: { screen: AppDrawerNavigator }
 });
 
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
