@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import {Text, View, TextInput} from 'react-native'
-import Button from 'react-native-button'
 import Icon from 'react-native-vector-icons/Fontisto'
-import styles from './app/Styles/Style'
 import Feed from './app/components/Feed'
 import Profile from './app/components/Profile'
 import Settings from './app/components/Settings'
@@ -40,12 +37,9 @@ const DashboardTabNavigator = createBottomTabNavigator(
       return {
         headerTitle: routeName,
         headerTitleStyle: { 
-          
           textAlign: 'center',
           alignSelf:'center',
           flex:1,
-
-
       },
       }
     }
@@ -89,7 +83,7 @@ const AppDrawerNavigator = createDrawerNavigator({
 });
 
 const AppSwitchNavigator = createSwitchNavigator({
-  //Launch: {screen:LaunchScreen},
+   Launch: {screen:LaunchScreen},
   Welcome: { screen: WelcomeScreen },
   Dashboard: { screen: AppDrawerNavigator }
 });
