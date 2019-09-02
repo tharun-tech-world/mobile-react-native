@@ -29,7 +29,14 @@ class LaunchScreen extends Component {
                   <View>
                       <Button 
                             style={styles.button}
-                            onPress={() => this.props.navigation.navigate('Dashboard')}>Sign in</Button>
+                            onPress={() => alert('Signin button pressed')}>Sign in</Button>
+
+                  </View>
+
+                  <View>
+                      <Button 
+                            style={styles.button}
+                            onPress={() => this.props.navigation.navigate('Dashboard')}>View </Button>
 
                   </View>
             
