@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Text, View, TextInput} from 'react-native'
+import {View} from 'react-native'
 import Button from 'react-native-button'
 import styles from '../../Styles/Style'
 
