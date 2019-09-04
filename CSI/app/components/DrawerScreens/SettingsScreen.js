@@ -27,12 +27,6 @@ class SettingsScreen extends Component {
         return (
 
             <Container>
-                     <Header>
-                <Left><Icon name="ios-menu" onPress={() => this.props.drawerOpen()} /></Left>
-
-                
-            </Header>
-               
                 <Content contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10 }}>
                     <Text>Settings Screen</Text>
                 </Content>

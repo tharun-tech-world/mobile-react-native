@@ -12,7 +12,9 @@ import ElderEvents from './app/components/BottomDrawerScreens/ElderEvents'
 import WelcomeScreen from './app/components/WelcomeScreen/WelcomeScreen'
 import DashboardScreen from './app/components/DashboardScreen/DashboardScreen'
 import LaunchScreen from './app/components/LaunchScreen/LaunchScreen'
-import HomeScreen from './app/components/DrawerScreens/HomeScreen'
+import GalleryScreen from './app/components/DrawerScreens/GalleryScreen'
+import SettingsScreen from './app/components/DrawerScreens/SettingsScreen';
+
 import {
   createSwitchNavigator,
   createAppContainer,
@@ -23,6 +25,7 @@ import {
   
 } from 'react-navigation';
 
+
 class App extends Component {
   render() {
     return <AppContainer />
@@ -32,7 +35,7 @@ class App extends Component {
 export default App
 
 
-const DashboardTabNavigator = createBottomTabNavigator(
+const TabNavigator = createBottomTabNavigator(
   {
     ChildEvents,
     YouthEvents,
@@ -57,7 +60,7 @@ const DashboardTabNavigator = createBottomTabNavigator(
       swipeEnabled:true,
       tabBarOptions: {
         activeTintColor: '#8A08A0',
-        activeBackgroundColor: '#F69F6D',
+        activeBackgroundColor: '#ECD46C',
         labelStyle: {
           fontSize: 15,
           fontWeight: 'bold', 
@@ -71,9 +74,9 @@ const DashboardTabNavigator = createBottomTabNavigator(
 );
 
 
-const DashboardStackNavigator = createStackNavigator(
+const StackNavigator = createStackNavigator(
   {
-    DashboardTabNavigator: DashboardTabNavigator
+    TabNavigator: TabNavigator
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
@@ -110,7 +113,7 @@ const CustomDrawerContentComponent = (props) => (
           style={{height: 65,
             width: 264,
             }}
-          source={require('./app/assets/DrawerLogo.jpg')} />
+          source={require('./app/assets/DrawerIcon.jpg')} />
       </Body>
     </Header>
     <Content>
@@ -120,8 +123,10 @@ const CustomDrawerContentComponent = (props) => (
   </Container>
 );
 
-const AppDrawerNavigator = createDrawerNavigator({
- Home: DashboardStackNavigator,
+const DrawerNavigator = createDrawerNavigator({
+ Home: StackNavigator,
+ Gallery: GalleryScreen,
+ Settings: SettingsScreen,
 
 },{
     initialRouteName: 'Home',
@@ -132,11 +137,12 @@ const AppDrawerNavigator = createDrawerNavigator({
     drawerToggleRoute: 'DrawerToggle'
 });
 
-const AppSwitchNavigator = createSwitchNavigator({
+const SwitchNavigator = createSwitchNavigator({
   Launch: {screen:LaunchScreen},
-  Welcome: { screen: WelcomeScreen },
-  Dashboard: { screen: AppDrawerNavigator }
+  //Welcome: { screen: WelcomeScreen },
+  Dashboard: { screen: DrawerNavigator },
+  
 });
 
 
-const AppContainer = createAppContainer(AppSwitchNavigator);
+const AppContainer = createAppContainer(SwitchNavigator);
