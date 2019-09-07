@@ -16,7 +16,7 @@ class SettingsScreen extends Component {
         headerLeft: <Icon name="ios-menu" style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('DrawerOpen')} />,
         drawerIcon:
             <Image
-                source={require('../../assets/DrawerLogo.jpg')}
+                source={require('../../assets/Drawer.jpg')}
                 style={[styles.icon]}
             />
 
@@ -27,12 +27,6 @@ class SettingsScreen extends Component {
         return (
 
             <Container>
-                     <Header>
-                <Left><Icon name="ios-menu" onPress={() => this.props.drawerOpen()} /></Left>
-
-                
-            </Header>
-               
                 <Content contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10 }}>
                     <Text>Settings Screen</Text>
                 </Content>

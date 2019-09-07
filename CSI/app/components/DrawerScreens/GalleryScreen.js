@@ -8,11 +8,11 @@ import {
 
 import { Container, Content, Icon, Button, Header, Left } from 'native-base'
 
-class HomeScreen extends Component {
+class GalleryScreen extends Component {
 
     //List Icon in drawer content
     static navigationOptions = ({ navigation }) => ({
-        title: "Settings",
+        title: "Gallery",
         headerLeft: <Icon name="ios-menu" style={{ paddingLeft: 10 }} onPress={() => navigation.navigate('DrawerOpen')} />,
         drawerIcon:
             <Image
@@ -27,14 +27,9 @@ class HomeScreen extends Component {
         return (
 
             <Container>
-                     <Header>
-                <Left><Icon name="ios-menu" onPress={() => this.props.drawerOpen()} /></Left>
-
-                
-            </Header>
                
                 <Content contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10 }}>
-                    <Text>Settings Screen</Text>
+                    <Text>Gallery Screen</Text>
                 </Content>
             </Container>
         )
@@ -42,7 +37,7 @@ class HomeScreen extends Component {
 
 }
 
-export default HomeScreen
+export default GalleryScreen
 
 const styles = StyleSheet.create({
     icon: {
