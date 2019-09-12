@@ -16,6 +16,7 @@ class Logo extends Component {
 const styles = StyleSheet.create({
     container:{
         backgroundColor: '#b0dfce',
+       
     
     }
 })
