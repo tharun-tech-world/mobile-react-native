@@ -23,6 +23,13 @@ const UserSchema = new Schema({
         minlength: 8,
 
     },
+    confirmemail: {
+        type: String,
+        required: true,
+        trim:true,
+        minlength: 8,
+
+    },
     password: {
         type: String,
         trim: true,
@@ -44,6 +51,14 @@ const UserSchema = new Schema({
         
 })
 
+//To precise the user info
+UserSchema.methods.toJSON = function(){
+    const user = this;
+    const userObject = user.toObject();
+    return _.pick(userObject, ["_id", "email", "name"])
+}
+
+//To generate auth token when user is being created.
 UserSchema.methods.generateAuthToken = function() { 
     const user = this;
     const access = "auth";
@@ -57,8 +72,62 @@ UserSchema.methods.generateAuthToken = function() {
     })
 }
 
-UserSchema.pre("save", function(next) {
 
+//To find user by credentials
+UserSchema.statics.findUserByCredentials = function(email, password){
+
+    const User = this;
+    return User.findOne({email}).then((user) =>{
+
+        if(!user){
+            Promise.reject();
+        }else{
+            return new Promise((resolve, reject) =>{
+
+                bcrypt.compare(password, user.password, (err, res) => {
+                    if(res){
+                        resolve(user);
+                    }else{
+                        reject();
+                    }
+                })
+            })
+        }
+    });
+}
+
+
+//To find user by token.
+UserSchema.statics.findUserByToken = function(token){
+
+    const User = this;
+    let decoded;
+
+    try{
+        decoded = jwt.verify(token, "AAASSSDDDFFFGGGHHH");
+    }catch(e){
+        return Promise.reject();
+    }
+
+    return User.findOne({
+        "_id": decoded._id,
+        "tokens.token": token,
+        "tokens.access": "auth"
+    })
+}
+
+//To delete the token
+UserSchema.methods.removeToken = function(token){
+    const user = this;
+    return user.updateOne({
+        $pull:{
+            tokens: {token}
+        }
+    });
+}
+
+//hashing password
+UserSchema.pre("save", function(next) {
     const user = this;
     if(user.isModified("password")){
 
