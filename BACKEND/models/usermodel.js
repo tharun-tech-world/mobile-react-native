@@ -44,12 +44,14 @@ const UserSchema = new Schema({
         
 })
 
-
+//To precise the user info
 UserSchema.methods.toJSON = function(){
     const user = this;
     const userObject = user.toObject();
     return _.pick(userObject, ["_id", "email", "name"])
 }
+
+//To generate auth token when user is being created.
 UserSchema.methods.generateAuthToken = function() { 
     const user = this;
     const access = "auth";
@@ -63,6 +65,8 @@ UserSchema.methods.generateAuthToken = function() {
     })
 }
 
+
+//To find user by credentials
 UserSchema.statics.findUserByCredentials = function(email, password){
 
     const User = this;
@@ -85,6 +89,8 @@ UserSchema.statics.findUserByCredentials = function(email, password){
     });
 }
 
+
+//To find user by token.
 UserSchema.statics.findUserByToken = function(token){
 
     const User = this;
@@ -103,7 +109,7 @@ UserSchema.statics.findUserByToken = function(token){
     })
 }
 
-
+//To delete the token
 UserSchema.methods.removeToken = function(token){
     const user = this;
     return user.updateOne({
@@ -113,9 +119,8 @@ UserSchema.methods.removeToken = function(token){
     });
 }
 
-
+//hashing password
 UserSchema.pre("save", function(next) {
-
     const user = this;
     if(user.isModified("password")){
 
