@@ -44,6 +44,12 @@ const UserSchema = new Schema({
         
 })
 
+
+UserSchema.methods.toJSON = function(){
+    const user = this;
+    const userObject = user.toObject();
+    return _.pick(userObject, ["_id", "email", "name"])
+}
 UserSchema.methods.generateAuthToken = function() { 
     const user = this;
     const access = "auth";
@@ -56,6 +62,57 @@ UserSchema.methods.generateAuthToken = function() {
         return token; 
     })
 }
+
+UserSchema.statics.findUserByCredentials = function(email, password){
+
+    const User = this;
+    return User.findOne({email}).then((user) =>{
+
+        if(!user){
+            Promise.reject();
+        }else{
+            return new Promise((resolve, reject) =>{
+
+                bcrypt.compare(password, user.password, (err, res) => {
+                    if(res){
+                        resolve(user);
+                    }else{
+                        reject();
+                    }
+                })
+            })
+        }
+    });
+}
+
+UserSchema.statics.findUserByToken = function(token){
+
+    const User = this;
+    let decoded;
+
+    try{
+        decoded = jwt.verify(token, "AAASSSDDDFFFGGGHHH");
+    }catch(e){
+        return Promise.reject();
+    }
+
+    return User.findOne({
+        "_id": decoded._id,
+        "tokens.token": token,
+        "tokens.access": "auth"
+    })
+}
+
+
+UserSchema.methods.removeToken = function(token){
+    const user = this;
+    return user.updateOne({
+        $pull:{
+            tokens: {token}
+        }
+    });
+}
+
 
 UserSchema.pre("save", function(next) {
 
