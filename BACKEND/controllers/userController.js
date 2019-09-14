@@ -7,8 +7,8 @@ const authenticate = require('../middewares/authenticate')
 router.post("/create", (req,res) => {
     //console.log(req.body);
     const userData = {
-        
         email: req.body.email,
+        confirmemail: req.body.confirmemail,
         password: req.body.password,
         name: req.body.name,
     }

@@ -23,6 +23,13 @@ const UserSchema = new Schema({
         minlength: 8,
 
     },
+    confirmemail: {
+        type: String,
+        required: true,
+        trim:true,
+        minlength: 8,
+
+    },
     password: {
         type: String,
         trim: true,

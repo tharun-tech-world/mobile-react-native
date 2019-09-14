@@ -64,7 +64,7 @@ class InputText extends Component{
 
 
     render(){
-        console.log(this.props.value)
+        //console.log(this.props.value)
         const {placeholder, securityTextEntry, keyboardType, maxLenghth, value, onChangeText, onSubmitEditing} = this.props;
         return(
             <View>

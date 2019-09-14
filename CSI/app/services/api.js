@@ -1,5 +1,5 @@
 
-const BASE_URL = "http://localhost:3333";
+const BASE_URL = "http://192.168.0.101:3333";
 
 export const api = async (url, method, body = null, headers = {}) => {
 
@@ -9,7 +9,7 @@ export const api = async (url, method, body = null, headers = {}) => {
 
       const fetchParams = {method, headers};
 
-      if((method === "POST" || method === "PUT") && !reqBody) {
+      if((method === "POST" && method === "PUT") && !reqBody) {
           throw new Error("Request body required");
       }
 
@@ -33,7 +33,7 @@ export const api = async (url, method, body = null, headers = {}) => {
     }
 }
 
-export const fetchApi = async (url, method, body, statusCode, token = null, loader = false, promiseReturnType = "json" ) => {
+export const fetchApi = async (url, method, body, statusCode, token = null, loader = false) => {
     try {
         const headers = {}  
         if(token) {
@@ -50,6 +50,6 @@ export const fetchApi = async (url, method, body, statusCode, token = null, load
         }
         throw response;
     }catch (error){
-        throw error
+        throw error;
     }
 }
